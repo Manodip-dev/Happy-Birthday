@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This one for You ✨</title>
+    <link rel="stylesheet" href="./Kit/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    </head>
+<body>
+
+    <audio id="bg-music-1" class="bg-music" preload="auto">
+        <source src="./Assets/Ishq_Bulaava_Edited.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+     <audio id="bg-music-2" class="bg-music" preload="auto">
+        <source src="./Assets/Ishq_Bulaava_Instrumental.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="firework-sound-1" class="firework-sound" preload="auto">
+        <source src="./Assets/Fireworks_Sound_01.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+     <audio id="firework-sound-2" class="firework-sound" preload="auto">
+        <source src="./Assets/Fireworks_Sound_02.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="grid-fade-overlay"></div>
+
+    <canvas id="fireworks-canvas"></canvas>
+
+    <canvas id="balloonCanvas"></canvas>
+
+    <h1 id="page-title">Awaiting Your Discovery</h1>
+    <p id="page-quote">For the one who makes every day brighter, a little something special from my side.</p>
+    <button id="claim-button">Claim Your Surprise</button>
+
+
+    <div id="bottom-elements">
+        <div id="lights-container">
+        </div>
+    </div>
+
+    <div id="audio-control-container">
+        <span id="listen-text">Click here to listen:</span>
+        <button id="audio-control-button" aria-label="Toggle Music">
+            <i class="fas fa-play"></i>
+        </button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+    </div>
+
+
+    <div id="transition-overlay">
+        <div id="transition-content">
+            <div id="countdown"></div>
+            <div id="video-placeholder">
+                 <video id="gift-video" width="320" height="240" muted playsinline>
+                     <source src="./Assets/Gift_Box.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                 </video>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

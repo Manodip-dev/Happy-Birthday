@@ -1,0 +1,539 @@
+/* --- Font Loading --- */
+/* Add @font-face rules for your locally hosted fonts */
+/* Update the src paths to point to your font files */
+/* Using ONLY .ttf for local adjustment - NOT recommended for production */
+
+/* Lexend (Weights 300, 400, 700) */
+@font-face {
+    font-family: 'Lexend';
+    src: url('Fonts/Lexend-Light.ttf') format('truetype'); /* Adjust path */
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Lexend';
+    src: url('Fonts/Lexend-Regular.ttf') format('truetype'); /* Adjust path */
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Lexend';
+    src: url('Fonts/Lexend-Bold.ttf') format('truetype'); /* Adjust path */
+    font-weight: 700;
+    font-display: swap;
+}
+
+
+/* Pacifico (Regular 400) */
+@font-face {
+    font-family: 'Pacifico';
+    src: url('Fonts/Pacifico-Regular.ttf') format('truetype'); /* Adjust path */
+    font-weight: 400; /* Pacifico is typically only one weight */
+    font-display: swap;
+}
+
+/* Dancing Script Variable Font (wght 400..700) */
+@font-face {
+    font-family: 'Dancing Script';
+    /* Assuming you have the variable font TTF file */
+    src: url('Fonts/DancingScript-VariableFont_wght.ttf') format('truetype-variations'); /* Adjust path and format for variable TTF */
+    font-weight: 400 700; /* Define the range of weights available */
+    font-display: swap;
+}
+
+/* --- Font Awesome Icons --- */
+/* If you hosted Font Awesome locally, ensure its CSS is linked in HTML. */
+/* The classes like .fas and .fa-play/pause require Font Awesome's CSS and font files. */
+/* If you replaced FA icons with SVGs or unicode, you might remove or modify these rules. */
+
+
+/* --- Original Styles Below --- */
+
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars */
+    background-color: #0d1117; /* Dark fallback background */
+    color: #c9d1d9; /* Light grey GitHub text */
+    font-family: 'Lexend', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    position: relative; /* For absolute positioning of children */
+    transition: background-color 1s ease-in-out; /* For body background transition */
+    display: flex; /* Use flexbox for centering/positioning main elements */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+
+    /* Layered Backgrounds: Blue Gradient, Paper Texture, Moving Grid */
+    background-image:
+        /* Dark Blue Gradient Overlay */
+        linear-gradient(to bottom, rgba(0, 30, 60, 0.7), rgba(0, 15, 30, 0.9)),
+        /* Paper Texture (Replace with your image path) */
+        url('image/paper-texture.png'),/* Paper texture image */
+        /* Moving Grid (Increased opacity for visibility) */
+        linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px), /* Increased opacity */
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px); /* Increased opacity */
+       opacity: 100;
+
+    background-size: cover, cover, 20px 20px, 20px 20px; /* Cover for gradient/texture, fixed for grid */
+    background-position: 0 0, 0 0, 0 0, 0 0;
+    background-blend-mode: overlay, normal, normal, normal; /* Blend modes for layering */
+    animation: background-grid-move 90s linear infinite; /* Increased duration for slower movement */
+}
+
+/* Background Grid Animation */
+@keyframes background-grid-move {
+    0% { background-position-x: 0, 0, 0; } /* Apply to grid layers */
+    100% { background-position-x: 0, 0, -20px; } /* Move only the grid layers */
+}
+
+/* Faster Grid Animation (applied via class) */
+body.fast-grid {
+     animation: background-grid-move 10s linear infinite; /* Faster duration */
+}
+
+
+/* Gradient Overlay for Grid Fade (remains for side fading) */
+#grid-fade-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow interaction with elements below */
+    z-index: 2; /* Above background grid, below main content */
+    background: linear-gradient(to right,
+                        rgba(13, 17, 23, 1) 0%,    /* Start fully opaque dark background */
+                        rgba(13, 17, 23, 0) 20%,   /* Fade to transparent */
+                        rgba(13, 17, 23, 0) 80%,   /* Stay transparent in the middle */
+                        rgba(13, 17, 23, 1) 100%   /* Fade back to opaque dark background */
+                       );
+}
+
+/* Canvas Styles */
+canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Allow clicks/interactions through the canvas */
+    /* z-index will be set individually for each canvas */
+}
+
+/* Fireworks Canvas */
+#fireworks-canvas {
+    z-index: 1; /* Below main content, above background */
+}
+
+/* Balloon Canvas */
+#balloonCanvas {
+     z-index: 3; /* Above fireworks, below main content */
+}
+
+
+/* Individual Main Content Elements */
+#page-title,
+#page-quote,
+#claim-button {
+     /* Position relative to allow z-index and transitions */
+    position: relative;
+    z-index: 10; /* Above background, fireworks, and balloons */
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* Fade out effect */
+    text-align: center; /* Ensure text is centered */
+}
+
+/* Fade out class for individual elements */
+#page-title.fade-out,
+#page-quote.fade-out,
+#claim-button.fade-out {
+    opacity: 0;
+    pointer-events: none; /* Disable interactions when fading */
+     /* Optional: slight upward movement on fade out */
+    transform: translateY(-20px);
+}
+
+
+/* Title */
+#page-title {
+    font-family: 'Dancing Script', cursive; /* Use handwritten font */
+    font-size: 4em; /* Larger font size */
+    color: #ff7b72; /* A cheerful red/pink */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6); /* More prominent shadow */
+    margin-bottom: 15px; /* Adjusted margin */
+}
+
+/* Quote */
+#page-quote {
+    font-family: 'Lexend', sans-serif; /* Keep Lexend for quote */
+    font-size: 1.3em; /* Slightly larger quote */
+    color: #e1e4e8; /* Lighter grey text */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    margin-bottom: 30px;
+    line-height: 1.6; /* Improved line spacing */
+    max-width: 80%; /* Limit width for readability */
+}
+
+/* Button */
+#claim-button {
+    display: inline-block;
+    padding: 12px 30px; /* Increased padding */
+    font-size: 1.2em; /* Larger font */
+    font-weight: bold; /* Uses Lexend Bold (700) */
+    color: #0d1117; /* Dark text for contrast */
+    background: linear-gradient(to bottom, #ffd33d, #ffb800); /* Yellow/Orange Gradient */
+    border: none;
+    border-radius: 8px; /* More rounded corners */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+    outline: none; /* Remove outline on focus */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Add shadow */
+}
+
+#claim-button:hover {
+    background: linear-gradient(to bottom, #ffb800, #ffd33d); /* Reverse gradient on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4); /* Larger shadow on hover */
+}
+
+#claim-button:active {
+    background: #ffb800; /* Solid color on active */
+    transform: scale(0.98); /* Subtle press effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Smaller shadow on active */
+}
+
+#claim-button:disabled {
+    background: #30363d; /* Dark grey when disabled */
+    color: #8b949e; /* Greyed out text */
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+
+/* Bottom Elements (Only Lights Remain) */
+#bottom-elements {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Reduced height as only lights are here */
+    overflow: hidden; /* Hide elements going below */
+    z-index: 5; /* Below main content, above balloons */
+    pointer-events: none; /* Don't block clicks on the main content */
+    transition: opacity 1s ease-in-out; /* Fade out effect */
+}
+
+#bottom-elements.fade-out {
+    opacity: 0;
+}
+
+/* Lights Container - Modernized */
+#lights-container {
+    position: absolute;
+    bottom: 0; /* Position at the very bottom of the container */
+    left: 0;
+    width: 100%;
+    height: 30px; /* Slightly taller container */
+    z-index: 1;
+    /* Very reduced opacity for an almost invisible glow from the bottom */
+    background: linear-gradient(to top, rgba(255, 211, 61, 0.01), rgba(255, 211, 61, 0)); /* Even less opacity */
+}
+
+/* Individual Lights - Modernized */
+.light {
+    position: absolute;
+    bottom: 0; /* Position at the very bottom of the container */
+    width: 6px; /* Slightly larger lights */
+    height: 6px;
+    background-color: #ffd33d; /* Yellowish */
+    border-radius: 50%;
+    /* Very reduced glow effect for a very light appearance */
+    box-shadow: 0 0 1px 0px #ffd33d; /* Minimal box shadow */
+    opacity: 0; /* Start fully transparent */
+    animation: twinkling var(--twinkle-duration, 1.5s) infinite ease-in-out alternate; /* Use CSS variable for duration */
+}
+
+/* Twinkling Animation for On/Off Blink */
+@keyframes twinkling {
+    0% { opacity: 0; } /* Fully off */
+    50% { opacity: 1; } /* Fully on */
+    100% { opacity: 0; } /* Fully off */
+}
+
+
+/* Transition Overlay (Smoke Effect) */
+#transition-overlay {
+    position: fixed; /* Covers the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* Start transparent */
+    z-index: 100; /* Above everything else */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Start invisible */
+    visibility: hidden; /* Also hidden for interaction */
+    transition: opacity 1s ease-in-out, background-color 0.5s ease-in-out, visibility 0s linear 1s; /* Transition opacity, color, and visibility */
+    flex-direction: column; /* Stack content vertically */
+}
+
+#transition-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent dark overlay during countdown/video */
+    transition: opacity 1s ease-in-out, background-color 0.5s ease-in-out; /* Transition opacity and color */
+}
+
+ #transition-overlay.full-black {
+     background-color: rgba(0, 0, 0, 1); /* Fully black overlay just before redirect */
+     transition: background-color 0.5s ease-in-out; /* Faster transition to black */
+ }
+
+
+/* Container for countdown and video */
+#transition-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Countdown Text */
+#countdown {
+    font-family: 'Lexend', sans-serif; /* Ensure consistent font */
+    font-size: 3em;
+    font-weight: bold; /* Uses Lexend Bold (700) */
+    color: white;
+    z-index: 102; /* Above overlay and video */
+    display: none; /* Hidden initially */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 20px; /* Space between countdown and video */
+}
+
+ /* Video Placeholder Container */
+#video-placeholder {
+    width: 320px; /* Set a fixed width for the square */
+    height: 320px; /* Set a fixed height for the square */
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background for placeholder */
+    display: none; /* Hidden initially */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide parts of the video if it's not square */
+    border-radius: 8px; /* Rounded corners for the placeholder */
+}
+
+#gift-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the placeholder area without distortion */
+}
+
+/* Audio Control Button Styles */
+#audio-control-container {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    z-index: 20; /* Above most elements */
+    display: flex;
+    align-items: center;
+    background-color: rgba(30, 36, 44, 0.8); /* Semi-transparent dark background */
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: opacity 1s ease-in-out; /* Fade out effect */
+     /* Added for responsiveness */
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: flex-end; /* Align items to the right */
+    max-width: 90%; /* Prevent container from being too wide */
+}
+
+ #audio-control-container.fade-out {
+    opacity: 0;
+    pointer-events: none; /* Disable interactions when fading */
+}
+
+#audio-control-button {
+    background: none;
+    border: none;
+    color: #c9d1d9; /* Light grey icon color */
+    font-size: 1.5em;
+    cursor: pointer;
+    outline: none;
+    padding: 0; /* Remove default button padding */
+    margin-right: 10px; /* Space between button and slider */
+     /* Added for responsiveness */
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+ /* Style for the "Click to Listen" text */
+ #listen-text {
+     color: #ffd33d; /* Yellow/Orange color */
+     font-family: 'Lexend', sans-serif; /* Ensure consistent font */
+     font-size: 0.9em;
+     margin-right: 10px; /* Space between text and button/slider */
+     white-space: nowrap; /* Prevent text from wrapping */
+     /* Added for responsiveness */
+     flex-shrink: 0; /* Prevent text from shrinking */
+ }
+
+#volume-slider {
+    -webkit-appearance: none; /* Override default slider appearance */
+    appearance: none;
+    width: 100px; /* Width of the slider */
+    height: 8px;
+    background: #586069; /* Dark grey track */
+    outline: none;
+    opacity: 0.7; /* Slightly transparent when not hovered */
+    transition: opacity .2s;
+    border-radius: 4px;
+     /* Added for responsiveness */
+    flex-grow: 1; /* Allow slider to grow */
+    min-width: 50px; /* Minimum width for slider */
+}
+
+#volume-slider:hover {
+    opacity: 1; /* Full opacity on hover */
+}
+
+/* Slider thumb styles */
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #ffd33d; /* Yellow/Orange thumb */
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #ffd33d; /* Yellow/Orange thumb */
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #page-title {
+        font-size: 3em; /* Adjusted for smaller screens */
+    }
+
+    #page-quote {
+        font-size: 1em;
+    }
+
+    #claim-button {
+        padding: 10px 25px;
+        font-size: 1.1em;
+    }
+
+    #video-placeholder {
+        width: 250px;
+        height: 250px;
+    }
+
+    #countdown {
+        font-size: 2.5em;
+    }
+
+    #audio-control-container {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 12px;
+    }
+
+    #listen-text {
+         font-size: 0.8em;
+         margin-right: 8px;
+    }
+
+    #audio-control-button {
+         font-size: 1.3em;
+         margin-right: 8px;
+    }
+
+    #volume-slider {
+        width: 80px; /* Adjusted width for medium screens */
+        height: 6px;
+    }
+
+     #volume-slider::-webkit-slider-thumb,
+     #volume-slider::-moz-range-thumb {
+         width: 16px;
+         height: 16px;
+     }
+}
+
+@media (max-width: 480px) {
+    #page-title {
+        font-size: 2.5em; /* Adjusted for smaller screens */
+    }
+
+    #page-quote {
+        font-size: 0.9em;
+    }
+
+    #claim-button {
+        padding: 8px 20px;
+        font-size: 1em;
+    }
+
+     #video-placeholder {
+        width: 200px;
+        height: 200px;
+    }
+
+    #countdown {
+        font-size: 2em;
+    }
+
+    #audio-control-container {
+        bottom: 5px;
+        right: 5px;
+        padding: 6px 10px;
+        /* Allow container to wrap if needed on very small screens */
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #listen-text {
+         font-size: 0.7em;
+         margin-right: 0; /* Remove margin when wrapped */
+         margin-bottom: 5px; /* Add space below text when wrapped */
+         width: 100%; /* Make text take full width when wrapped */
+         text-align: center;
+    }
+
+     #audio-control-button {
+         font-size: 1.1em;
+         margin-right: 6px;
+         /* Ensure button stays on its own line if wrapping */
+         width: auto; /* Allow button to size based on content */
+         text-align: center;
+         margin-bottom: 0; /* Remove bottom margin */
+    }
+
+     #volume-slider {
+        width: 100%; /* Make slider take full width when wrapped */
+        height: 5px;
+        margin-right: 0; /* Remove right margin when full width */
+    }
+
+     #volume-slider::-webkit-slider-thumb,
+     #volume-slider::-moz-range-thumb {
+         width: 14px;
+         height: 14px;
+     }
+}

@@ -1,0 +1,606 @@
+/* --- Font Loading --- */
+/* Add @font-face rules for your locally hosted fonts */
+/* Update the src paths to point to your font files */
+
+/* Inter Variable Font (wght 400-700 requested originally) */
+@font-face {
+    font-family: 'Inter';
+    src: url('Fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); /* Adjust path and format */
+    font-weight: 400 700; /* Define the range of weights available */
+    font-display: swap; /* Handle font loading */
+}
+
+/* Lexend Variable Font (wght 400-700 requested originally) */
+@font-face {
+    font-family: 'Lexend';
+    src: url('Fonts/Lexend-VariableFont_wght.ttf') format('truetype-variations'); /* Adjust path and format */
+    font-weight: 400 700; /* Define the range of weights available */
+    font-display: swap; /* Handle font loading */
+}
+
+/* Dancing Script Variable Font (wght 400-700 requested originally) */
+@font-face {
+    font-family: 'Dancing Script';
+    src: url('Fonts/DancingScript-VariableFont_wght.ttf') format('truetype-variations'); /* Adjust path and format */
+    font-weight: 400 700; /* Define the range of weights available */
+    font-display: swap; /* Handle font loading */
+}
+
+
+/* --- Original Styles Below --- */
+
+/* Apply Inter font and dark background to the body */
+body {
+    font-family: 'Inter', sans-serif;
+    overflow: hidden; /* Prevent scrollbars */
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #0a0a1a, #1a1a3a); /* Gradient night sky */
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Container for the background elements */
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Moon styling */
+.moon {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    width: 60px; /* Decreased moon size */
+    height: 60px; /* Decreased moon size */
+    background-color: #f0f0f0; /* Base moon color */
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px rgba(255, 255, 200, 0.8); /* Glowing effect */
+    z-index: 1;
+    /* Add a subtle texture effect using a gradient or pattern */
+    background-image: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.1) 10%, rgba(0,0,0,0) 50%),
+                      radial-gradient(circle at 70% 60%, rgba(0,0,0,0.15) 15%, rgba(0,0,0,0) 60%),
+                      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.05) 8%, rgba(0,0,0,0) 40%);
+}
+
+/* Star styling */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0; /* Stars start invisible */
+    animation: twinkle 1.5s infinite ease-in-out alternate; /* Twinkling animation */
+}
+
+/* Twinkling animation */
+@keyframes twinkle {
+    0% { opacity: 0.2; }
+    100% { opacity: 1; }
+}
+
+/* Falling star styling */
+.falling-star {
+    position: absolute;
+    width: 3px; /* Adjusted width */
+    height: 3px; /* Adjusted height */
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)); /* Trail effect */
+    border-radius: 50%;
+    pointer-events: none; /* Do not block mouse events */
+    filter: blur(0.5px); /* Add a slight blur for a softer tail */
+}
+
+ /* Mountains styling - Using SVG path for a more pronounced triangular silhouette */
+.mountains {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; /* Increased height for mountains */
+    z-index: 2;
+    /* Using a new SVG path for more distinct triangular peaks */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23101020" fill-opacity="1" d="M0,160L60,149.3C120,139,240,117,360,117.3C480,117,600,139,720,160C840,181,960,203,1080,202.7C1200,203,1320,181,1380,170.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>');
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+/* Single Cloud styling */
+.cloud {
+    position: absolute;
+    top: 10%; /* Position higher in the sky */
+    left: -150%; /* Start further off-screen to the left */
+    width: 400%; /* Wider than screen for longer travel and off-screen time */
+    height: 30%; /* Height of the cloud layer */
+    z-index: 0; /* Behind stars and moon */
+    background: radial-gradient(ellipse at 50% 50%, rgba(200, 200, 210, 0.05) 0%, rgba(200, 200, 210, 0) 70%); /* Soft, very semi-transparent cloud shape, decreased opacity */
+    animation: cloud-intermittent-move 180s linear infinite; /* Slower, intermittent movement */
+}
+
+/* Cloud intermittent movement animation */
+@keyframes cloud-intermittent-move {
+    0% { left: -150%; opacity: 0; } /* Start off-screen, fully transparent */
+    5% { opacity: 0.08; } /* Fade in quickly to low opacity */
+    10% { opacity: 0.08; } /* Stay visible at low opacity */
+    15% { opacity: 0; } /* Fade out quickly */
+    100% { left: 50%; opacity: 0; } /* Move across and stay off-screen, fully transparent */
+}
+
+
+/* Aurora Borealis styling */
+.aurora {
+    position: absolute;
+    top: 0;
+    left: -100%; /* Start further off-screen to the left */
+    width: 300%; /* Wider than screen to allow slower movement */
+    height: 50%; /* Upper part of the sky */
+    z-index: 0; /* Behind stars and moon */
+    background: linear-gradient(to bottom, rgba(0, 255, 0, 0.05) 0%, rgba(0, 200, 255, 0.05) 30%, rgba(150, 0, 255, 0.05) 60%, rgba(0, 0, 0, 0) 100%); /* Gradient colors, decreased opacity */
+    filter: blur(30px); /* Soft blur effect */
+    animation: aurora-move 100s linear infinite alternate; /* Slow, continuous movement with alternate direction */
+}
+
+/* Aurora movement and fade animation */
+@keyframes aurora-move {
+    0% { left: -100%; opacity: 0; } /* Start off-screen, fully transparent */
+    10% { opacity: 0.4; } /* Fade in */
+    90% { opacity: 0.4; } /* Stay visible */
+    100% { left: 0%; opacity: 0; } /* Move across, fade out */
+}
+
+
+/* Trees at the front styling */
+.foreground-trees {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%; /* Decreased height for foreground trees */
+    z-index: 4; /* Place above mountains */
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.foreground-tree {
+    position: relative; /* Needed for absolute positioning of children */
+    width: 80px; /* Decreased tree width */
+    height: 100%;
+    /* Animation properties will be set by JavaScript for random movement */
+}
+
+ /* Tree swaying animation - More dynamic for wind effect */
+@keyframes tree-sway {
+    0% { transform: rotate(0deg) translateX(0px); }
+    25% { transform: rotate(1.5deg) translateX(5px); }
+    50% { transform: rotate(-1deg) translateX(-3px); }
+    75% { transform: rotate(1deg) translateX(4px); }
+    100% { transform: rotate(0deg) translateX(0px); }
+}
+
+
+.tree-trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px; /* Decreased trunk width */
+    height: 40%; /* Trunk height relative to tree */
+    background-color: #3a2a1a; /* Trunk color */
+}
+
+/* Simple oval tree leaves styling - Adjusted animation for wind effect */
+.tree-leaves {
+    position: absolute;
+    bottom: 30%; /* Position above trunk, adjusted leafy area */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px; /* Decreased Oval width */
+    height: 100px; /* Decreased Oval height */
+    background-color: #2a4a2a; /* Leaves color */
+    border-radius: 50%; /* Oval shape */
+    animation: leaf-sway 3s infinite ease-in-out alternate; /* Adjusted animation duration */
+}
+
+
+/* Leaf swaying animation - More dynamic for wind effect */
+@keyframes leaf-sway {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(-50%) rotate(3deg); }
+    50% { transform: translateX(-50%) rotate(-2deg); }
+    75% { transform: translateX(-50%) rotate(2.5deg); }
+    100% { transform: translateX(-50%) rotate(0deg); }
+}
+
+/* Envelope and Letter Styling (Landscape) */
+.envelope-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px; /* Landscape width */
+    height: 200px; /* Landscape height */
+    perspective: 1000px; /* For 3D effect on opening */
+    cursor: pointer;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.5s ease-in-out;
+    z-index: 5; /* Above background elements */
+}
+
+.envelope-container.visible {
+    opacity: 1; /* Fade in */
+    /* Vibrate animation before clicking */
+    animation: subtle-vibrate 1s ease-in-out 2; /* Vibrate 2 times */
+}
+
+ /* Subtle Vibrate animation for the envelope before click */
+@keyframes subtle-vibrate {
+    0% { transform: translate(-50%, -50%) translateX(1px); }
+    25% { transform: translate(-50%, -50%) translateX(-1px); }
+    50% { transform: translate(-50%, -50%) translateX(1px); }
+    75% { transform: translate(-50%, -50%) translateX(-1px); }
+    100% { transform: translate(-50%, -50%) translateX(1px); }
+}
+
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #cce3de; /* Lighter envelope color */
+    border-radius: 8px;
+    transition: transform 0.6s ease-in-out;
+    transform-style: preserve-3d;
+    /* Polka dot pattern */
+    background-image: radial-gradient(#457b9d 15%, transparent 16%),
+                      radial-gradient(#457b9d 15%, transparent 16%);
+    background-size: 30px 30px; /* Size of the polka dots */
+    background-position: 0 0, 15px 15px; /* Offset for pattern */
+    background-color: #cce3de; /* Base color */
+}
+
+/* Envelope flap (Landscape) */
+.envelope:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Adjusted for landscape layout */
+    border-top: 100px solid #457b9d; /* Flap color */
+    border-left: 150px solid transparent; /* Adjusted for width */
+    border-right: 150px solid transparent; /* Adjusted for width */
+    transform-origin: top;
+    transition: transform 0.6s ease-in-out;
+    z-index: 2; /* Flap is above the letter when closed */
+}
+
+/* Envelope opening animation */
+.envelope-container.open .envelope:before {
+    transform: rotateX(180deg); /* Open the flap */
+}
+
+.letter {
+    position: absolute;
+    top: 5px; /* Adjusted position inside the envelope */
+    left: 5px; /* Adjusted position inside the envelope */
+    width: calc(100% - 10px); /* Adjusted width */
+    height: calc(100% - 10px); /* Adjusted height */
+    background-color: #f1faee; /* Letter paper color */
+    border-radius: 4px; /* Keep standard border radius */
+    padding: 15px; /* Adjusted padding inside the letter */
+    box-sizing: border-box;
+    font-family: 'Lexend', sans-serif; /* Default letter font */
+    line-height: 1.5; /* Adjusted line height */
+    color: #09080a;
+    /* Initial state inside envelope */
+    transform: translateY(0) translateX(0) scale(0.95); /* Slightly larger scale inside */
+    opacity: 0; /* Initially hidden */
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out; /* Smooth transition */
+    z-index: 1; /* Below the flap when closed */
+    overflow-y: auto; /* Add scrollbar */
+    /* Style the scrollbar */
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: #457b9d #f1faee; /* thumb and track color */
+
+    /* Add a subtle pattern */
+    background-image: linear-gradient(45deg, rgba(168, 218, 220, 0.2) 25%, transparent 25%, transparent 75%, rgba(168, 218, 220, 0.2) 75%, rgba(168, 218, 220, 0.2)),
+                      linear-gradient(-45deg, rgba(168, 218, 220, 0.2) 25%, transparent 25%, transparent 75%, rgba(168, 218, 220, 0.2) 75%, rgba(168, 218, 220, 0.2));
+    background-size: 15px 15px; /* Smaller pattern size */
+    background-color: #f1faee; /* Base color */
+
+    /* Removed torn paper effect */
+    mask-image: none;
+}
+
+/* Webkit browsers (Chrome, Safari) scrollbar styling */
+.letter::-webkit-scrollbar {
+    width: 8px; /* width of the scrollbar */
+}
+
+.letter::-webkit-scrollbar-track {
+    background: #f1faee; /* color of the track */
+    border-radius: 10px;
+}
+
+.letter::-webkit-scrollbar-thumb {
+    background-color: #457b9d; /* color of the scroll thumb */
+    border-radius: 10px; /* roundness of the scroll thumb */
+    border: 2px solid #f1faee; /* creates padding around thumb */
+}
+
+
+/* Letter state when envelope is open */
+.envelope-container.open .letter {
+     opacity: 1; /* Fade in */
+     /* Transform is set by JavaScript for slide out */
+     z-index: 3; /* Ensure letter is in front when open */
+     /* Removed subtle vibration animation when shown */
+     animation: none;
+}
+
+ /* Slightly low vibration animation for the letter when shown (Kept for closing animation) */
+@keyframes subtle-letter-vibrate {
+    0% { transform: translate(0.5px, 0.5px); }
+    25% { transform: translate(-0.5px, -1px); }
+    50% { transform: translate(-1.5px, 0px); }
+    75% { transform: translate(0.5px, 1px); }
+    100% { transform: translate(0.5px, 0.5px); }
+}
+
+
+.letter h3 {
+    font-family: 'Dancing Script', cursive; /* Handwritten font for the heading */
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px; /* Adjusted margin */
+    font-size: 1.5em; /* Adjusted font size */
+    color: #2f1dff; /* Birthday color */
+}
+
+.letter p {
+     margin-bottom: 0.8em; /* Adjusted space between paragraphs */
+     font-size: 0.9em; /* Adjusted font for fit */
+}
+
+.letter .stamp {
+    position: absolute;
+    top: 10px; /* Adjusted position */
+    right: 10px; /* Adjusted position */
+    font-size: 1.5em; /* Adjusted size of the emoji stamp */
+    transform: rotate(3deg); /* Slight rotation */
+    /* Stamp styling */
+    border: 1px solid #333; /* Thinner border */
+    padding: 4px; /* Adjusted padding */
+    background-color: #fff;
+    border-radius: 3px; /* Smaller border radius */
+    box-shadow: 0.5px 0.5px 2px rgba(0,0,0,0.2); /* Smaller shadow */
+    display: inline-block; /* Treat as block for padding/border */
+    z-index: 10; /* Ensure stamp is above text */
+}
+
+/* Additional styling based on PDF layout */
+.letter-content {
+    margin-top: 35px; /* Adjusted space below the stamp/heading area */
+    margin-left: 10px; /* Adjusted Left margin */
+    margin-right: 10px; /* Adjusted Right margin */
+}
+
+/* Click Me Text Styling */
+.click-me {
+    position: absolute;
+    bottom: 20px; /* Position below the envelope */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #5b00ca; /* Changed text color to white for better contrast */
+    font-family: 'Dancing Script', cursive; /* Changed font */
+    font-size: 1.9em; /* Increased font size */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 3.8); /* Increased text shadow for readability */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease-in-out;
+    z-index: 6; /* Above envelope */
+    pointer-events: none; /* Don't block clicks on the envelope */
+}
+
+.envelope-container:not(.open) .click-me {
+    opacity: 1; /* Show when envelope is not open */
+}
+
+/* Container for dynamic effects (fireworks, balloons) */
+.effects-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Don't block clicks */
+    z-index: 8; /* Above envelope and letter */
+}
+
+/* Fireworks Particle Styling */
+.firework-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: white; /* Default color */
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* Balloon Styling */
+.balloon {
+    position: absolute;
+    width: 40px; /* Balloon size */
+    height: 50px;
+    background-color: red; /* Default color */
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Balloon shape */
+    bottom: -60px; /* Start below the screen */
+    left: 50%; /* Default horizontal position */
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 9; /* Above fireworks */
+}
+
+.balloon:before {
+    content: '';
+    position: absolute;
+    width: 2px; /* String width */
+    height: 20px; /* String length */
+    background-color: #333; /* String color */
+    bottom: -20px; /* Position below balloon */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Balloon float animation */
+@keyframes float-up {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-1000px) translateX(var(--float-x, 0px)) rotate(var(--float-rotate, 0deg)); opacity: 0; }
+}
+
+/* --- Responsive Styles --- */
+
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+    .envelope-container {
+        width: 400px; /* Slightly larger envelope */
+        height: 250px;
+    }
+
+    .envelope:before {
+        border-top: 125px solid #457b9d;
+        border-left: 200px solid transparent;
+        border-right: 200px solid transparent;
+    }
+
+    .letter {
+        padding: 20px; /* Increased padding */
+    }
+
+    .letter h3 {
+        font-size: 1.8em; /* Larger heading */
+    }
+
+    .letter p {
+        font-size: 1em; /* Slightly larger text */
+    }
+
+    .letter .stamp {
+        font-size: 2em; /* Larger stamp */
+        top: 15px;
+        right: 15px;
+    }
+
+    .letter-content {
+         margin-top: 45px;
+    }
+
+    .click-me {
+        font-size: 1.4em; /* Larger click me text */
+        bottom: 30px;
+    }
+
+     .moon {
+        width: 80px; /* Larger moon */
+        height: 80px;
+     }
+
+     .star {
+        width: 3px; /* Larger stars */
+        height: 3px;
+     }
+
+     .falling-star {
+        width: 4px; /* Larger falling stars */
+        height: 4px;
+     }
+
+     .foreground-tree {
+        width: 100px; /* Larger trees */
+     }
+
+     .tree-trunk {
+        width: 20px;
+     }
+
+     .tree-leaves {
+        width: 100px;
+        height: 120px;
+     }
+}
+
+/* Desktop and larger screens */
+@media (min-width: 1024px) {
+    .envelope-container {
+        width: 500px; /* Larger envelope */
+        height: 300px;
+    }
+
+     .envelope:before {
+        border-top: 150px solid #457b9d;
+        border-left: 250px solid transparent;
+        border-right: 250px solid transparent;
+    }
+
+     .letter {
+        padding: 25px; /* Increased padding */
+    }
+
+    .letter h3 {
+        font-size: 2em; /* Larger heading */
+    }
+
+    .letter p {
+        font-size: 1.1em; /* Larger text */
+    }
+
+     .letter .stamp {
+        font-size: 2.5em; /* Larger stamp */
+        top: 20px;
+        right: 20px;
+    }
+
+     .letter-content {
+         margin-top: 55px;
+    }
+
+    .click-me {
+        font-size: 1.6em; /* Larger click me text */
+        bottom: 40px;
+    }
+
+     .moon {
+        width: 100px; /* Even larger moon */
+        height: 100px;
+     }
+
+     .star {
+        width: 4px; /* Even larger stars */
+        height: 4px;
+     }
+
+     .falling-star {
+        width: 5px; /* Even larger falling stars */
+        height: 5px;
+     }
+
+     .foreground-tree {
+        width: 120px; /* Even larger trees */
+     }
+
+     .tree-trunk {
+        width: 25px;
+     }
+
+     .tree-leaves {
+        width: 120px;
+        height: 140px;
+     }
+}
